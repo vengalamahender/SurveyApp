@@ -1,0 +1,120 @@
+
+
+<div class="container">
+	<h1>Create Survey</h1>
+	<div class="row">
+		<div class="col-xl-2 left"><label>Survey Name:</label></div>
+		<div class="col-xl-10 right"><input type="" name="" [(ngModel)]="surveyname" class="form-control"></div>
+	</div>
+	<div class="row">
+		<div class="col-xl-4 left">
+			<button mat-raised-button color="accent"  data-toggle="modal" data-target="#myModal">Add Questions</button>
+		</div>
+		<div class="col-xl-8 right">
+<!-- 		<select>
+				<option disabled>Choose Option</option>
+				<option>Multiple Choices</option>
+				<option>true/false</option>
+			</select> -->
+		</div>
+	</div><br>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th width="10%">Q.No.</th>
+				<th width="90%">Question</th>
+				<!-- <th>Options</th> -->
+			</tr>
+		</thead>
+		<tbody *ngFor="let c of this.queArr;let i =index">
+			<tr>
+				<td width="10%">{{i+1}}</td>
+				<td width="90%">{{c.qname}}</td>
+			</tr>
+			<tr *ngIf="c.otype=='Multiple Choices'">
+				<td width="50%"><input type="checkbox" name="">{{c.Opt1}}</td>
+				<td  width="50%"><input type="checkbox" name="">{{c.Opt2}}</td>
+			</tr>
+			<tr *ngIf="c.otype=='Multiple Choices'">
+				<td  width="50%"><input type="checkbox" name="">{{c.Opt3}}</td>
+				<td  width="50%"> <input type="checkbox" name="">{{c.Opt4}}</td>
+			</tr>
+			<tr *ngIf="c.otype!='Multiple Choices'">
+				<td  width="50%"><input type="checkbox" name="">True</td>
+				<td  width="50%"><input type="checkbox" name="">False</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="row">
+			<div class="col-xl-4 left">
+			</div>
+			<div class="col-xl-8 right">
+				<button mat-raised-button color="accent" style="float: right;" (click)="submitSurvey()"  >Submit Survey</button>
+			</div>
+	</div>
+</div><br>
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Question</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        	<div class="row" >
+				<div class="col-xl-4 left">
+					<label>Enter Question</label>
+				</div>
+				<div class="col-xl-8 right">
+					<input type="" name="" class="form-control" [(ngModel)]="question">
+
+				</div>
+			</div><br>
+			<div class="row" >
+				<div class="col-xl-4 left">
+					<label>Choose Type</label>
+				</div>
+				<div class="col-xl-8 right" >
+					<select  (ngModelChange)="onChange($event)" class="form-control">
+						<option >Choose Option</option>
+						<option >Multiple Choices</option>
+						<option>true/false</option>
+					</select>
+				</div>
+			</div><br>
+			<div class="row" *ngIf="show" >
+				<div class="col-xl-4 left">
+					<label>Enter Options</label>
+				</div>
+				<div class="col-xl-8 right">
+					<table class="table-bordered">
+						<tbody>
+							<tr>
+								<td>1.</td>
+								<td><input type="" name="" [(ngModel)]="option1"></td>
+								<td>2.</td>
+								<td><input type="" name="" [(ngModel)]="option2"></td>
+							</tr>
+							<tr>
+								<td>3.</td>
+								<td><input type="" name="" [(ngModel)]="option3"></td>
+								<td>4.</td>
+								<td><input type="" name="" [(ngModel)]="option4"></td>
+								</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="addQuestions()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
