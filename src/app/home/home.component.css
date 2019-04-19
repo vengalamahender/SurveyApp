@@ -16,5 +16,6 @@ h1{
     flex-direction: column;
     -ms-flex-align: center;
     align-items: center;
+    margin-top: 20px;
     
 }

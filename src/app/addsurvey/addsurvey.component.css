@@ -3,4 +3,11 @@
 }
 th ,td{
 	text-align: center;
+
+}
+table,tr,td,th,tbody{
+	border: none;
+}
+.btn-danger{
+	float: right;
 }

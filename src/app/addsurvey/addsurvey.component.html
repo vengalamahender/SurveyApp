@@ -1,7 +1,7 @@
 
 
 <div class="container">
-	<h1>Create Survey</h1>
+	<h3>Create Survey</h3>
 	<div class="row">
 		<div class="col-xl-2 left"><label>Survey Name:</label></div>
 		<div class="col-xl-10 right"><input type="" name="" [(ngModel)]="surveyname" class="form-control"></div>
@@ -19,29 +19,45 @@
 		</div>
 	</div><br>
 	<table class="table table-bordered">
-		<thead>
+<!-- 		<thead>
 			<tr>
 				<th width="10%">Q.No.</th>
 				<th width="90%">Question</th>
-				<!-- <th>Options</th> -->
+				
 			</tr>
 		</thead>
-		<tbody *ngFor="let c of this.queArr;let i =index">
+ -->		<tbody *ngFor="let c of this.queArr;let i =index">
 			<tr>
 				<td width="10%">{{i+1}}</td>
-				<td width="90%">{{c.qname}}</td>
+				<td width="90%" style="text-align: left;">{{c.qname}}</td>
 			</tr>
 			<tr *ngIf="c.otype=='Multiple Choices'">
-				<td width="50%"><input type="checkbox" name="">{{c.Opt1}}</td>
-				<td  width="50%"><input type="checkbox" name="">{{c.Opt2}}</td>
-			</tr>
-			<tr *ngIf="c.otype=='Multiple Choices'">
-				<td  width="50%"><input type="checkbox" name="">{{c.Opt3}}</td>
-				<td  width="50%"> <input type="checkbox" name="">{{c.Opt4}}</td>
+				<td  width="10%" style="text-align: left;"></td>
+				<td width="90%" >
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>{{c.Opt1}}</mat-checkbox>
+						</div>
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>{{c.Opt2}}</mat-checkbox>
+						</div>
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>{{c.Opt3}}</mat-checkbox>
+						</div>
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>{{c.Opt4}}</mat-checkbox>
+						</div>	
+				</td>
 			</tr>
 			<tr *ngIf="c.otype!='Multiple Choices'">
-				<td  width="50%"><input type="checkbox" name="">True</td>
-				<td  width="50%"><input type="checkbox" name="">False</td>
+				<td  width="10%" style="text-align: left;"></td>
+				<td  width="90%" style="text-align: left;">
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>True</mat-checkbox>
+						</div>
+						<div class="row" style="margin-left: 20px;">
+							<mat-checkbox>False</mat-checkbox>
+						</div>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -65,14 +81,86 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        	<div class="row" >
+      <div class="modal-body"> 
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                    	<div class="row">
+                    		<div class="col-xl-4 left">
+								<label>Enter Question</label>
+							</div>
+							<div class="col-xl-8 right">
+								<input type="text" formControlName="Question" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Question.errors }" />
+		                        <div *ngIf="submitted && f.Question.errors" class="invalid-feedback">
+		                            <div *ngIf="f.Question.errors.required">Question is required</div>
+		                        </div>
+							</div>
+                    	</div>
+                    </div>
+                    <div class="form-group">
+                    	<div class="row">
+                    		<div class="col-xl-4 left">
+								<label>Choose Type</label>
+							</div>
+							<div class="col-xl-8 right">
+						           <select class="custom-select" (change)="onChange($event)" formControlName="optiontype" [ngClass]="{ 'is-invalid': submitted && f.optiontype.errors }">
+						              <option value="">Choose Option</option>
+						              <option value="Multiple Choices">Multiple Choices</option>
+						              <option value="true/false">true/false</option>
+						            </select>
+						          
+					            <div class="invalid-feedback" *ngIf="submitted && f.optiontype.errors?.required">
+					              <sup>*</sup>Please enter your city name
+					            </div>
+							</div>
+                    	</div>
+                    </div>
+					<div class="row" *ngIf="show" >
+						<div class="col-xl-4 left">
+							<label>Enter Options</label>
+						</div>
+						<div class="col-xl-8 right">
+							<table class="table-bordered">
+								<tbody>
+									<tr>
+										<td>1.</td>
+										<td>
+											<!-- <input formControlName="option1"> -->
+											<input [(ngModel)]="option1" [ngModelOptions]="{standalone: true}">   
+										</td>
+										<td>2.</td>
+										<td>
+											<!-- <input formControlName="option2"> -->
+											<input [(ngModel)]="option2" [ngModelOptions]="{standalone: true}">
+										</td>
+									</tr>
+									<tr>
+										<td>3.</td>
+										<td>
+											<!-- <input formControlName="option3"> -->
+											<input [(ngModel)]="option3" [ngModelOptions]="{standalone: true}">
+										</td>
+										<td>4.</td>
+										<td>
+											<!-- <input formControlName="option4"> -->
+											<input [(ngModel)]="option4" [ngModelOptions]="{standalone: true}">
+										</td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<hr>
+                    <div class="form-group">
+                        <!-- <button class="btn btn-primary">Register</button> -->
+                        <button  class="btn btn-danger" (click)="addQuestions()" >Register</button>
+                    </div>
+                </form>
+<!--         	<div class="row" >
 				<div class="col-xl-4 left">
 					<label>Enter Question</label>
 				</div>
 				<div class="col-xl-8 right">
 					<input type="" name="" class="form-control" [(ngModel)]="question">
-
 				</div>
 			</div><br>
 			<div class="row" >
@@ -80,7 +168,7 @@
 					<label>Choose Type</label>
 				</div>
 				<div class="col-xl-8 right" >
-					<select  (ngModelChange)="onChange($event)" class="form-control">
+					<select [(ngModel)]="type"  (ngModelChange)="onChange($event)" class="form-control">
 						<option >Choose Option</option>
 						<option >Multiple Choices</option>
 						<option>true/false</option>
@@ -109,12 +197,12 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
+			</div> -->
       </div>
       <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="addQuestions()">Submit</button>
-      </div>
+<!--       <div class="modal-footer">
+        <button type="button" class="btn btn-danger"  (click)="addQuestions()">Submit</button>
+      </div> -->
     </div>
   </div>
 </div>

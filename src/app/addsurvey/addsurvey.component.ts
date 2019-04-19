@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService } from '../list.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as $AB from 'jquery';
+
 @Component({
   selector: 'app-addsurvey',
   templateUrl: './addsurvey.component.html',
@@ -8,10 +11,33 @@ import { Router } from '@angular/router';
 })
 export class AddsurveyComponent implements OnInit {
 
-  constructor(private setList:ListService,private router:Router) { }
+  constructor(private setList:ListService,private router:Router,private formBuilder: FormBuilder) { }
+    registerForm: FormGroup;
+    submitted = false;
 
-  ngOnInit() {
-  }
+
+    ngOnInit() {
+        this.registerForm = this.formBuilder.group({
+            Question: ['', Validators.required],
+            optiontype: ['', Validators.required],
+            option1: ['', Validators.required],
+            option2: ['', Validators.required],
+            option3: ['', Validators.required],
+            option4: ['', Validators.required]
+        });
+    }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.registerForm.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.registerForm.invalid) {
+            return;
+        }
+        alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+    }
   show:boolean=false;
   queArr:any=[];
   queArr1:any=[];
@@ -23,14 +49,16 @@ export class AddsurveyComponent implements OnInit {
   surveyname:any='';
   question:any='';
 	addQuestions(){
-		console.log(this.optiontype,this.question,this.option1,this.option2,this.option3,this.option4,this.surveyname)
-		if(this.optiontype!='Multiple Choices'){
+		console.log(this.registerForm.value.optiontype,this.registerForm.value.Question,this.option1,this.option2,this.option3,this.option4,this.surveyname)
+		this.question = this.registerForm.value.Question;
+		this.optiontype = this.registerForm.value.optiontype
+		if(this.optiontype!='Multiple Choices'&&this.question!=""&&this.optiontype!=""){
 			let Obj1 = {
 				'qname':this.question,
 				'otype':this.optiontype
 			}
 			this.queArr.push(Obj1);
-		}else{
+		}else if(this.question!=""&&this.optiontype!=""){
 			let Obj1 = {
 				'qname':this.question,
 				'otype':this.optiontype,
@@ -54,11 +82,13 @@ export class AddsurveyComponent implements OnInit {
 			'questions':this.queArr
 		}
 		this.queArr1.push(Obj2)
-		console.log(this.queArr1)
+		console.log(this.queArr1);
+		 (<any>$('#myModal')).modal('hide');
 	}
+	type:any="";
 	onChange($event){
-		console.log($event);
-		this.optiontype=$event;
+		console.log($event.target.value);
+		this.optiontype=$event.target.value;
 		if(this.optiontype!='Multiple Choices'){
 			this.show=false
 		}else{
@@ -67,8 +97,13 @@ export class AddsurveyComponent implements OnInit {
 	}
 	submitSurvey(){
 		console.log(this.queArr1)
-    	this.setList.setData(this.queArr1[0]); 
-    	/*this.queArr=[];*/
-    	this.router.navigate([''])
+		if(this.queArr1.length>0){
+			    this.setList.setData(this.queArr1[0]); 
+		    	/*this.queArr=[];*/
+		    	this.router.navigate([''])
+		}else{
+			alert('Add Survey...')
+		}
+
 	}
 }

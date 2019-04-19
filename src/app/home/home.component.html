@@ -1,8 +1,8 @@
-<div style="text-align:center;margin-top: 40px;">
+<!-- <div style="text-align:center;margin-top: 40px;">
   <h1>
     Welcome to {{ title }}
   </h1>
-</div>
+</div> -->
 <div class="btn1" >
   <button mat-raised-button color="accent" [routerLink]="['/add']" >Create Survey</button>
 </div><br>
@@ -11,11 +11,11 @@
 		<thead>
 			<tr>
 				<th width="10%">S.No.</th>
-				<th width="90%">Name of Survey</th>
+				<th width="90%">Survey Name</th>
 			</tr>
 		<tbody>
 			<tr *ngFor="let c of this.survaylist;let i =index">
-				<td width="10%">{{i+1}}</td>
+				<td width="10%">{{i+1}}.</td>
 				<td width="90%">{{c.surveyName}}</td>
 			</tr>
 		</tbody>
