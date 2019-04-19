@@ -11,22 +11,10 @@
 			<button mat-raised-button color="accent" (click)="showModal()">Add Questions</button>
 		</div>
 		<div class="col-xl-8 right">
-<!-- 		<select>
-				<option disabled>Choose Option</option>
-				<option>Multiple Choices</option>
-				<option>true/false</option>
-			</select> -->
 		</div>
 	</div><br>
 	<table class="table table-bordered">
-<!-- 		<thead>
-			<tr>
-				<th width="10%">Q.No.</th>
-				<th width="90%">Question</th>
-				
-			</tr>
-		</thead>
- -->		<tbody *ngFor="let c of this.queArr;let i =index">
+		<tbody *ngFor="let c of this.queArr;let i =index">
 			<tr>
 				<td width="10%">{{i+1}}</td>
 				<td width="90%" style="text-align: left;">{{c.qname}}</td>

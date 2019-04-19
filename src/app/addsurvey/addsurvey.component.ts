@@ -45,8 +45,8 @@ export class AddsurveyComponent implements OnInit {
   optiontype:any='';  surveyname:any='';  question:any='';
 	addQuestions(){
 		console.log(this.registerForm.value.optiontype,this.registerForm.value.Question,this.option1,this.option2,this.option3,this.option4,this.surveyname)
-		this.question = this.registerForm.value.Question;
-		this.optiontype = this.registerForm.value.optiontype
+		this.question = this.registerForm.value.Question==null?"":this.registerForm.value.Question;
+		this.optiontype = this.registerForm.value.optiontype==null?"":this.registerForm.value.optiontype;
 		if(this.optiontype!='Multiple Choices'&&this.question!=""&&this.optiontype!=""){
 			let Obj1 = {
 				'qname':this.question,
@@ -66,7 +66,7 @@ export class AddsurveyComponent implements OnInit {
 			this.queArr.push(Obj1);
 			this.submitData();
 		}
-		this.optiontype='';	this.option4='';this.option3='';this.option2='';this.option1='';this.question='';
+		
 		console.log(this.queArr);
 	}
 	submitData(){
@@ -76,6 +76,9 @@ export class AddsurveyComponent implements OnInit {
 		}
 		this.queArr1.push(Obj2)
 		console.log(this.queArr1);
+		this.optiontype='';	this.option4='';this.option3='';this.option2='';this.option1='';this.question='';
+		this.show=false;
+		this.registerForm.reset();
 		 (<any>$('#myModal')).modal('hide');
 	}
 	type:any="";
